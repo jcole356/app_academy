@@ -1,6 +1,10 @@
 require 'byebug'
 require_relative 'piece_requirements'
 
+
+# Missing functionality.  Need to force another choice if selection is
+# Nil.
+
 class Board
 
   KLASSES = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]

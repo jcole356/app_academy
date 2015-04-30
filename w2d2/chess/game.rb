@@ -47,7 +47,7 @@ class HumanPlayer
       row, col = start_pos
 
       piece = board.grid[row][col]
-      piece.move(board, end_pos)
+      piece.move(board, end_pos) #unless piece.nil?
     rescue InvalidMoveError
       puts "Invalid move, try again!"
       retry
