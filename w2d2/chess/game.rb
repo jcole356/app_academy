@@ -2,45 +2,55 @@ require_relative 'board.rb'
 
 class Game
 
+  attr_reader :board
+
   def initialize
     @board = Board.new
-    @player1 = HumanPlayer.new
-    @player2 = HumanPlayer.new
+    @players = {
+      white: HumanPlayer.new(:white),
+      black: HumanPlayer.new(:black)
+    }
+    @current_player = :white
   end
 
   def play
-    debugger
     puts "Welcome to chess!"
-    turn = 1
-    until @board.checkmate?(:black)# || @board.checkmate?(:white)
-      render
-      @player1.play_turn if turn.odd?
-      @player2.play_turn if turn.even?
-      turn += 1
+    until @board.checkmate?(@current_player)
+      # @board.render
+      @players[@current_player].play_turn(board)
+      @current_player = (@current_player == :white) ? :black : :white
     end
-  end
-
-  def render
-    @board.render
-  end
-
-  def accept_input
   end
 end
 
 class HumanPlayer
-  def play_turn
-    begin
-      # puts "Player #{player} turn. Input starting position as '0, 0'"
-      start_pos = gets.chomp.split(",").map(&:to_i)
-      # puts "Player #{player} turn. Input ending position as '0, 0'"
-      end_pos   = gets.chomp.split(",").map(&:to_i)
-      row, col = start_pos
-      piece = @board.grid[row][col]
 
-      piece.move(@board, end_pos)
+  attr_reader :color
+
+  def initialize(color)
+    @color = color
+  end
+
+  def play_turn(board)
+
+    board.render
+
+    begin
+      puts "#{color.capitalize}'s turn. Input starting position as '0,0'"
+
+      start_pos = gets.chomp.split(",").map { |n| n.to_i - 1 }
+
+      puts "Input ending position as '0,0'"
+
+      end_pos   = gets.chomp.split(",").map { |n| n.to_i - 1 }
+
+      row, col = start_pos
+
+      piece = board.grid[row][col]
+      piece.move(board, end_pos)
     rescue InvalidMoveError
-      puts "invalid input, try again"
+      puts "Invalid move, try again!"
+      retry
     end
   end
 end

@@ -81,14 +81,16 @@ class Board
   def checkmate?(color)
     player_pieces = pieces.select { |piece| piece.color == color }
     player_pieces.all? do |piece|
-      piece.moves.all? { |move| move_into_check?(move) }
+      piece.moves.all? { |move| piece.move_into_check?(move) }
     end
   end
 
+  # This doesn't appear to be working either.  I can barely move my
+  # King anywhere.
+
   def check?(color)
-    # debugger
-    king_pos = pieces.find do |el|
-      el.is_a?(King) && el.color == color
+    king_pos = pieces.find do |piece|
+      piece.is_a?(King) && piece.color == color
     end.position
 
     pieces.any? do |piece|
@@ -97,7 +99,14 @@ class Board
   end
 
   def render
-    @grid.each do |row|
+    chessboard = [[" "]]
+    (1..8).each do |n|
+      chessboard[0] << n.to_s
+      chessboard[n] = [n.to_s]
+    end
+    puts chessboard[0].join("|")
+
+    @grid.each_with_index do |row, i|
       display_line = []
       row.each do |space|
         if space.nil?
@@ -106,18 +115,32 @@ class Board
           display_line << space.symbol
         end
       end
-      puts display_line.join("|")
+      view = chessboard[i + 1] + display_line
+      puts view.join("|")
     end
   end
 
 end
 
 
-#
 # b = Board.new
 # b.render
-# b.grid[0][0].move!(b, [5,4])
+# p b.checkmate?(:white)
 # b.render
 # p b.check?(:white)
-#
-# # puts c.grid
+
+# Test case from AA
+
+# b = Board.new
+#  b.move([6,5],[5,5])
+#  b.move([1,4],[3,4])
+#  b.move([6,6],[4,6])
+#  b.move([0,3],[4,7])
+#  b.render
+#  p b.checkmate?(:white)
+#  p b.checkmate?(:black)
+
+ # f2, f3
+ # e7, e5
+ # g2, g4
+ # d8, h4
