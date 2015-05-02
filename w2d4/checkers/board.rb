@@ -19,6 +19,8 @@ class Board
     @grid[x][y] = value
   end
 
+  # This works, but it's much easier to use the flatten.compact
+  # methods to address the nil spaces.
   def dup_board
     new_board = Board.new(false)
     self.grid.each_with_index do |row, i|

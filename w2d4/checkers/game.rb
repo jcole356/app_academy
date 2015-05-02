@@ -35,9 +35,7 @@ class HumanPlayer
     @color = color
   end
 
-  def accept_input
-    puts "#{@color.upcase}, it's your turn!  Select a spot to
-          move from"
+  def accept_start_pos
 
     start_pos = gets.chomp.split(",")
 
@@ -47,6 +45,30 @@ class HumanPlayer
     end_pos = gets.chomp.split(",")
 
     [start_pos, end_pos]
+  end
+
+  def accept_start_pos
+
+    start_pos = gets.chomp.split(",")
+
+    puts "#{@color.upcase}, it's your turn!  Select a spot to
+          move from"
+
+    end_pos = gets.chomp.split(",")
+
+    [start_pos, end_pos]
+  end
+
+  def player_turn
+    puts "#{@color.upcase}, it's your turn!  Select a spot to
+          move from"
+
+    accept_start_pos
+
+    puts "#{@color.upcase}, it's your turn!  Select a spot to
+          move from"
+          
+    accept_end_pos
   end
 
 end
