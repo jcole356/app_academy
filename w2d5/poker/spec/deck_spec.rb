@@ -26,9 +26,11 @@ describe Deck do
       expect(deck.cards.count).to eq(50)
     end
 
+
+    # Not really sure how to handle these long specs...
     it "raises error if you try to take more cards than there are in deck" do
       deck = Deck.new([Card.new(:clubs, :five), Card.new(:hearts, :ten)])
-      expect { deck.take(3) }.to raise_error("Cannot do that")
+      expect { deck.take(3) }.to raise_error("Cannot remove cards from an empty deck!")
     end
   end
 end

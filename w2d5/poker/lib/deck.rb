@@ -19,7 +19,7 @@ class Deck
   end
 
   def take(n)
-    raise "Cannot do that" if n > @cards.count
+    raise "Cannot remove cards from an empty deck!" if n > @cards.count
     @cards.shift(n)
   end
 end

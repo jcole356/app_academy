@@ -25,17 +25,20 @@ class Hand
     @cards.compact!
   end
 
+  def discard_and_draw(indices)
+    discard(indices)
+    draw(indices.size).sort!
+  end
+
   def draw(num)
     @cards += @deck.take(num)
   end
 
-  def discard_and_draw(indices)
-    discard(indices)
-    draw(indices.size)
-    @cards.sort!
-  end
-
   def hand_rankings
     HAND_RANKINGS
+  end
+
+  def render
+    @cards
   end
 end
