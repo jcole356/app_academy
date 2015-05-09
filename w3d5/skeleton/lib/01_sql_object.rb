@@ -96,11 +96,11 @@ class SQLObject
     n.times { question_marks << "?" }
     question_marks = question_marks.join(", ")
 
-    DBConnection.execute(<<-SQL, attribute_values)
-    INSERT INTO
-      #{self.class.table_name} (#{col_names})
-    VALUES
-      (#{question_marks})
+    DBConnection.execute(<<-SQL, *attribute_values)
+      INSERT INTO
+        #{self.class.table_name} (#{col_names})
+      VALUES
+        (#{question_marks})
     SQL
   end
 
